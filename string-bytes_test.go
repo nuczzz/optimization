@@ -1,9 +1,3 @@
-Golang optimization example.
-
-# optimization
-
-#### 1. ***bytes and string convert***
-```
 package optimization
 
 import (
@@ -55,11 +49,3 @@ func BenchmarkOptimizationS2B(b *testing.B) {
 		Bs = String2Bytes(str)
 	}
 }
-```
-**benchmark test**
-![avatar](screenshot/string-bytes.png)
-
-#### 2. todo...
-
-# reference
-1. [segmentfault-qyuhen](https://segmentfault.com/u/qyuhen)
