@@ -1,0 +1,2 @@
+# optimization
+Golang optimization example.
