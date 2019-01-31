@@ -1,8 +1,8 @@
 package optimization
 
 import (
-	"unsafe"
 	"testing"
+	"unsafe"
 )
 
 func Bytes2String(bs []byte) string {

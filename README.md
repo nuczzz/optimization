@@ -57,6 +57,9 @@ func BenchmarkOptimizationS2B(b *testing.B) {
 }
 ```
 **benchmark test**
+```
+go test -run="^^$" -bench="Benchmark(Normal|Optimization)(B2S|S2B)$" -benchmem
+```
 ![avatar](screenshot/string-bytes.png)
 
 #### 2. ***array and slice***
@@ -98,6 +101,9 @@ func BenchmarkSlice(b *testing.B) {
 }
 ```
 **benchmark test**
+```
+go test -run=^^$ -bench="Benchmark(Array|Slice)$" -benchmem
+```
 ![avatar](screenshot/array-slice.png)
 
 #### 3. ***defer***
@@ -136,7 +142,54 @@ func BenchmarkDeferUnlock(b *testing.B) {
 }
 ```
 **benchmark test**
+```
+go test -run=^^$ -bench="^Benchmark(Normal|Defer)Unlock$" -benchmem
+```
 ![avatar](screenshot/defer.png)
+
+#### 4. ***closure***
+```
+package optimization
+
+import "testing"
+
+func function(i int) {
+	t := i
+	t++
+}
+
+// go test -run=^^$ -bench=^BenchmarkNormal$ -benchmem
+func BenchmarkNormal(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		function(i)
+	}
+}
+
+// go test -run=^^$ -bench=^BenchmarkAnonymous$ -benchmem
+func BenchmarkAnonymous(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		func(i int) {
+			t := i
+			t++
+		}(i)
+	}
+}
+
+// go test -run=^^$ -bench=^BenchmarkClosure$ -benchmem
+func BenchmarkClosure(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		func() {
+			t := i
+			t++
+		}()
+	}
+}
+```
+**benchmark test**
+```
+go test -run=^^$ -bench="^Benchmark(Normal|Anonymous|Closure)$" -benchmem
+```
+![avatar](screenshot/closure.png)
 
 # reference
 1. [segmentfault-qyuhen](https://segmentfault.com/u/qyuhen)
