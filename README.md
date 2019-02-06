@@ -482,5 +482,59 @@ go test -run=^^$ -bench="^Benchmark(Normal|Batch)Channel$" -benchmem
 ```
 ![avatar](screenshot/channel_block.png)
 
+#### 9. ***range or index***
+```
+package optimization
+
+import "testing"
+
+const TraversalMax = 1000
+
+func initList() []string {
+	s := make([]string, TraversalMax)
+	for i := 0; i < TraversalMax; i++ {
+		s[i] = "https://github.com"
+	}
+	return s
+}
+
+func rangeTraversal(list []string) {
+	for i, data := range list {
+		_, _ = i, data
+	}
+}
+
+func indexTraversal(list []string) {
+	for i := 0; i < len(list); i++ {
+		_, _ = i, list[i]
+	}
+}
+
+// go test -run=^^$ -bench="^BenchmarkRangeTraversal$" -benchmem
+func BenchmarkRangeTraversal(b *testing.B) {
+	list := initList()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		rangeTraversal(list)
+	}
+}
+
+// go test -run=^^$ -bench="^BenchmarkIndexTraversal$" -benchmem
+func BenchmarkIndexTraversal(b *testing.B) {
+	list := initList()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		indexTraversal(list)
+	}
+}
+```
+**benchmark test**
+
+Does some optimization in current version(GO 1.11)???
+```
+go test -run=^^$ -bench="^Benchmark(Range|Index)Traversal$" -benchmem
+```
+![avatar](screenshot/range-or-index.png)
+
 # reference
 1. [segmentfault-qyuhen](https://segmentfault.com/u/qyuhen)

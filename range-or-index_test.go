@@ -2,7 +2,7 @@ package optimization
 
 import "testing"
 
-const TraversalMax = 2<<10
+const TraversalMax = 1000
 
 func initList() []string {
 	s := make([]string, TraversalMax)
