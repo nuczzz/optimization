@@ -41,3 +41,6 @@ func BenchmarkIndexTraversal(b *testing.B) {
 		indexTraversal(list)
 	}
 }
+
+// todo: benchmark test result is different from predicted
+// todo: to confirm whether some optimization in GO 1.11
